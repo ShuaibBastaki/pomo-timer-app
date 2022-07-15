@@ -6,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart'; // to be used later stage.
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
-  final String title = "peeeep";
+  final String title = "Pomo";
 
   @override
   State<HomePage> createState() => _HomePageState();
