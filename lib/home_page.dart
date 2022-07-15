@@ -1,7 +1,8 @@
 import 'dart:async';
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:pomo_timer/common/custom_button.dart';
-import 'package:google_fonts/google_fonts.dart'; // to be used later stage.
+import 'package:google_fonts/google_fonts.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -12,12 +13,20 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage>
+    with SingleTickerProviderStateMixin {
+  AnimationController? _animationController;
+
   Duration startTime = const Duration(minutes: 25);
   Timer? countdownTimer;
 
   @override
   void initState() {
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 4),
+    );
+
     super.initState();
   }
 
@@ -51,13 +60,29 @@ class _HomePageState extends State<HomePage> {
         Timer.periodic(const Duration(seconds: 1), (_) => setCountDown());
   }
 
+  void _rotateTomato(Image image) {
+    setState(() {
+      _animationController!.repeat();
+    });
+  }
+
+  void _resetTomato() {
+    _animationController!.reset();
+  }
+
+  void _stopTomato() {
+    _animationController!.stop();
+  }
+
   @override
   void dispose() {
+    _animationController?.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    Image tomatoIMG = Image.asset("assets/tomato.png");
     String strDigits(int n) => n.toString().padLeft(2, '0');
     final minutes = strDigits(startTime.inMinutes.remainder(60));
     final seconds = strDigits(startTime.inSeconds.remainder(60));
@@ -68,23 +93,28 @@ class _HomePageState extends State<HomePage> {
         centerTitle: true,
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: Text(
-          widget.title,
-          style: const TextStyle(color: Colors.black),
-        ),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(0.0),
-              child: Image.asset("assets/wizardAvatar.png"),
+            AnimatedBuilder(
+              animation: _animationController!.view,
+              builder: (context, child) {
+                return Transform.rotate(
+                  angle: _animationController!.value * 2 * pi,
+                  child: child,
+                );
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(60.0),
+                child: tomatoIMG,
+              ),
             ),
             Text(
               "$minutes:$seconds",
-              style: const TextStyle(
-                fontSize: 40,
+              style: GoogleFonts.pompiere(
+                textStyle: const TextStyle(fontSize: 80),
               ),
             ),
             const SizedBox(height: 10),
@@ -94,6 +124,7 @@ class _HomePageState extends State<HomePage> {
                 CustomButton(
                   onPressed: () {
                     _startTimer();
+                    _rotateTomato(tomatoIMG);
                   },
                   borderRadius: 10,
                   primary: Colors.green,
@@ -106,6 +137,7 @@ class _HomePageState extends State<HomePage> {
                 CustomButton(
                   onPressed: () {
                     _pauseTimer();
+                    _stopTomato();
                   },
                   borderRadius: 10,
                   primary: Colors.green,
@@ -118,6 +150,7 @@ class _HomePageState extends State<HomePage> {
                 CustomButton(
                   onPressed: () {
                     _resetTimer();
+                    _resetTomato();
                   },
                   borderRadius: 10,
                   primary: Colors.green,
