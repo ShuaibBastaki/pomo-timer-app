@@ -19,7 +19,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.green,
       ),
       home: AnimatedSplashScreen(
-        splash: "assets/logo2.png",
+        splash: "assets/logo.png",
+        duration: 1800,
         backgroundColor: const Color.fromARGB(255, 28, 52, 35),
         splashTransition: SplashTransition.fadeTransition,
         nextScreen: const HomePage(),
