@@ -18,6 +18,7 @@ class _HomePageState extends State<HomePage>
   AnimationController? _animationController;
 
   Duration startTime = const Duration(minutes: 25);
+  Duration breakTime = const Duration(minutes: 5);
   Timer? countdownTimer;
 
   @override
