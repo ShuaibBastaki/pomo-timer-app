@@ -18,7 +18,6 @@ class _HomePageState extends State<HomePage>
   AnimationController? _animationController;
 
   Duration startTime = const Duration(minutes: 25);
-  Duration breakTime = const Duration(minutes: 5);
   Timer? countdownTimer;
 
   @override
@@ -33,13 +32,25 @@ class _HomePageState extends State<HomePage>
 
   void setCountDown() {
     const reduceSecondsBy = 1;
+
     setState(() {
       final seconds = startTime.inSeconds - reduceSecondsBy;
+
       if (seconds < 0) {
         countdownTimer!.cancel();
+        _resetTomato();
+        _startBreakTimer();
+        countdownTimer!.cancel();
+        _resetTomato();
       } else {
         startTime = Duration(seconds: seconds);
       }
+    });
+  }
+
+  void _startBreakTimer() {
+    setState(() {
+      startTime = const Duration(minutes: 5);
     });
   }
 

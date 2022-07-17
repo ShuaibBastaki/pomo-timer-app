@@ -1,3 +1,4 @@
+import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:pomo_timer/home_page.dart';
 
@@ -17,7 +18,12 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.green.shade100,
         primarySwatch: Colors.green,
       ),
-      home: const HomePage(),
+      home: AnimatedSplashScreen(
+        splash: "assets/logo2.png",
+        backgroundColor: const Color.fromARGB(255, 28, 52, 35),
+        splashTransition: SplashTransition.fadeTransition,
+        nextScreen: const HomePage(),
+      ),
     );
   }
 }
