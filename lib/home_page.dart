@@ -16,7 +16,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
   AnimationController? _animationController;
-
+  bool isButtonActive = true;
   Duration startTime = const Duration(minutes: 25);
   Timer? countdownTimer;
 
@@ -68,8 +68,10 @@ class _HomePageState extends State<HomePage>
   }
 
   void _startTimer() {
-    countdownTimer =
-        Timer.periodic(const Duration(seconds: 1), (_) => setCountDown());
+    setState(() {
+      countdownTimer =
+          Timer.periodic(const Duration(seconds: 1), (_) => setCountDown());
+    });
   }
 
   void _rotateTomato(Image image) {
@@ -134,10 +136,15 @@ class _HomePageState extends State<HomePage>
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 CustomButton(
-                  onPressed: () {
-                    _startTimer();
-                    _rotateTomato(tomatoIMG);
-                  },
+                  onPressed: isButtonActive
+                      ? () {
+                          setState(() {
+                            _startTimer();
+                            _rotateTomato(tomatoIMG);
+                            isButtonActive = false;
+                          });
+                        }
+                      : null,
                   borderRadius: 10,
                   primary: Colors.green,
                   textColor: Colors.white,
@@ -150,6 +157,7 @@ class _HomePageState extends State<HomePage>
                   onPressed: () {
                     _pauseTimer();
                     _stopTomato();
+                    isButtonActive = true;
                   },
                   borderRadius: 10,
                   primary: Colors.green,
@@ -163,6 +171,7 @@ class _HomePageState extends State<HomePage>
                   onPressed: () {
                     _resetTimer();
                     _resetTomato();
+                    isButtonActive = true;
                   },
                   borderRadius: 10,
                   primary: Colors.green,
