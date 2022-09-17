@@ -1,7 +1,9 @@
+// ignore_for_file: prefer_const_constructors, unnecessary_const
+
 import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:pomo_timer/common/custom_button.dart';
+import 'package:pomo_timer/design/clicky_button.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class HomePage extends StatefulWidget {
@@ -120,66 +122,94 @@ class _HomePageState extends State<HomePage>
                   child: child,
                 );
               },
-              child: Padding(
-                padding: const EdgeInsets.all(60.0),
-                child: tomatoIMG,
-              ),
+              child: tomatoIMG,
+            ),
+            SizedBox(
+              height: 20,
             ),
             Text(
               "$minutes:$seconds",
-              style: GoogleFonts.pompiere(
+              style: GoogleFonts.dosis(
+                fontSize: 88,
                 textStyle: const TextStyle(fontSize: 80),
               ),
             ),
-            const SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CustomButton(
-                  onPressed: isButtonActive
-                      ? () {
-                          setState(() {
-                            _startTimer();
-                            _rotateTomato(tomatoIMG);
-                            isButtonActive = false;
-                          });
-                        }
-                      : null,
-                  borderRadius: 10,
-                  primary: Colors.green,
-                  textColor: Colors.white,
-                  child: const Text("Start"),
+            const SizedBox(height: 40),
+            SizedBox(
+              width: 340,
+              child: FittedBox(
+                fit: BoxFit.fill,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ClickyButton(
+                      onPressed: isButtonActive
+                          ? () {
+                              setState(() {
+                                _startTimer();
+                                _rotateTomato(tomatoIMG);
+                                isButtonActive = false;
+                              });
+                            }
+                          : (() {}),
+                      color: Colors.green,
+                      child: Text(
+                        "start",
+                        style: GoogleFonts.josefinSans(
+                          textStyle: const TextStyle(
+                            fontSize: 50,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 8,
+                    ),
+                    ClickyButton(
+                      onPressed: () {
+                        _pauseTimer();
+                        _stopTomato();
+                        isButtonActive = true;
+                      },
+                      color: Colors.lime,
+                      child: Text(
+                        "pause",
+                        style: GoogleFonts.josefinSans(
+                          textStyle: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 50,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 8,
+                    ),
+                  ],
                 ),
-                const SizedBox(
-                  width: 10,
+              ),
+            ),
+            ClickyButton(
+              onPressed: () {
+                _resetTimer();
+                _resetTomato();
+                isButtonActive = true;
+              },
+              color: Colors.red,
+              child: Text(
+                "reset",
+                style: GoogleFonts.josefinSans(
+                  textStyle: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 50,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-                CustomButton(
-                  onPressed: () {
-                    _pauseTimer();
-                    _stopTomato();
-                    isButtonActive = true;
-                  },
-                  borderRadius: 10,
-                  primary: Colors.green,
-                  textColor: Colors.white,
-                  child: const Text("Pause"),
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                CustomButton(
-                  onPressed: () {
-                    _resetTimer();
-                    _resetTomato();
-                    isButtonActive = true;
-                  },
-                  borderRadius: 10,
-                  primary: Colors.green,
-                  textColor: Colors.white,
-                  child: const Text("Reset"),
-                ),
-              ],
-            )
+              ),
+            ),
           ],
         ),
       ),
