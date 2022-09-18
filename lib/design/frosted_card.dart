@@ -23,7 +23,7 @@ class FrostedCard extends StatelessWidget {
       child: Container(
         width: theWidth,
         height: theHeight,
-        color: Colors.greenAccent.withOpacity(0.1),
+        color: Colors.greenAccent.withOpacity(0.28),
         child: Stack(
           children: [
             //blur effect ==> the third layer of stack
