@@ -2,6 +2,7 @@
 
 import 'dart:async';
 import 'dart:math';
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:pomo_timer/design/clicky_button.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -98,7 +99,7 @@ class _HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) {
-    Image tomatoIMG = Image.asset("assets/tomato.png");
+    Image tomatoIMG = Image.asset("assets/Tomato_Pixelated.png");
     String strDigits(int n) => n.toString().padLeft(2, '0');
     final minutes = strDigits(startTime.inMinutes.remainder(60));
     final seconds = strDigits(startTime.inSeconds.remainder(60));
@@ -114,24 +115,31 @@ class _HomePageState extends State<HomePage>
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            AnimatedBuilder(
-              animation: _animationController!.view,
-              builder: (context, child) {
-                return Transform.rotate(
-                  angle: _animationController!.value * 2 * pi,
-                  child: child,
-                );
-              },
-              child: tomatoIMG,
+            SizedBox(
+              height: 200,
+              child: AnimatedBuilder(
+                animation: _animationController!.view,
+                builder: (context, child) {
+                  return Transform.rotate(
+                    angle: _animationController!.value * 2 * pi,
+                    child: child,
+                  );
+                },
+                child: tomatoIMG,
+              ),
             ),
             SizedBox(
               height: 20,
             ),
             Text(
               "$minutes:$seconds",
-              style: GoogleFonts.dosis(
+              style: GoogleFonts.sedgwickAve(
                 fontSize: 88,
-                textStyle: const TextStyle(fontSize: 80),
+                textStyle: TextStyle(
+                  fontSize: 80,
+                  color: Colors.green.shade800,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
             const SizedBox(height: 40),
