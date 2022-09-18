@@ -2,7 +2,6 @@
 
 import 'dart:async';
 import 'dart:math';
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:pomo_timer/design/clicky_button.dart';
 import 'package:google_fonts/google_fonts.dart';
