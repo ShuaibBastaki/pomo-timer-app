@@ -56,9 +56,9 @@ class _WelcomePageState extends State<WelcomePage> {
                         RichText(
                           textAlign: TextAlign.left,
                           text: TextSpan(
-                            style: GoogleFonts.fjallaOne(
+                            style: GoogleFonts.signika(
                               textStyle: TextStyle(
-                                  fontSize: 48,
+                                  fontSize: 40,
                                   color: Colors.lightGreen.shade200),
                             ),
                             children: <TextSpan>[
@@ -109,30 +109,48 @@ class _WelcomePageState extends State<WelcomePage> {
                         SizedBox(
                           height: 10,
                         ),
-                        Transform.scale(
-                          scale: 0.8,
-                          child: ClickyButton(
-                              child: Text(
-                                "I'm ready",
-                                style: GoogleFonts.dosis(
-                                  textStyle: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 40,
-                                    fontWeight: FontWeight.bold,
+                        Stack(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Transform.scale(
+                                  scale: 0.8,
+                                  child: ClickyButton(
+                                      child: Text(
+                                        "I'm ready",
+                                        style: GoogleFonts.dosis(
+                                          textStyle: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 40,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                      color: Colors.teal,
+                                      onPressed: () async {
+                                        Future.delayed(
+                                            Duration(milliseconds: 1600), () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    HomePage()),
+                                          );
+                                        });
+                                      }),
+                                ),
+                                SizedBox(
+                                  height: 100,
+                                  child: Padding(
+                                    padding:
+                                        EdgeInsets.only(bottom: 30, right: 20),
+                                    child: Image.asset("assets/white_dog.gif"),
                                   ),
                                 ),
-                              ),
-                              color: Colors.teal,
-                              onPressed: () async {
-                                Future.delayed(Duration(milliseconds: 1600),
-                                    () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => HomePage()),
-                                  );
-                                });
-                              }),
+                              ],
+                            ),
+                          ],
                         ),
                       ],
                     ),
