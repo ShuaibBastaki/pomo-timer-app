@@ -1,7 +1,6 @@
-// ignore_for_file: prefer_const_constructors, sort_child_properties_last
+// ignore_for_file: prefer_const_constructors, sort_child_properties_last, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pomo_timer/design/clicky_button.dart';
 import 'package:pomo_timer/design/frosted_card.dart';
@@ -16,18 +15,20 @@ class WelcomePage extends StatefulWidget {
 }
 
 class _WelcomePageState extends State<WelcomePage> {
-  late VideoPlayerController controller;
+  late VideoPlayerController _videoController =
+      VideoPlayerController as VideoPlayerController;
+  final _textController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    controller = VideoPlayerController.asset("assets/forest.mp4")
+    _videoController = VideoPlayerController.asset("assets/tomato.mp4")
       ..initialize().then((_) {
         setState(() {});
       });
-    controller.setLooping(true);
-    controller.play();
-    controller.setVolume(0);
+    _videoController.setLooping(true);
+    _videoController.play();
+    _videoController.setVolume(0);
   }
 
   @override
@@ -41,7 +42,7 @@ class _WelcomePageState extends State<WelcomePage> {
       ),
       body: Stack(
         children: [
-          VideoPlayer(controller),
+          VideoPlayer(_videoController),
           Center(
             child: FrostedCard(
               theHeight: 320.0,
@@ -63,51 +64,30 @@ class _WelcomePageState extends State<WelcomePage> {
                             ),
                             children: <TextSpan>[
                               TextSpan(
-                                text: "How ",
+                                text: "Prepare ",
                                 style: TextStyle(
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),
                               TextSpan(
-                                text: "many ",
+                                text: "your ",
                                 style: TextStyle(fontWeight: FontWeight.w600),
                               ),
                               TextSpan(
-                                text: "pomodoro ",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.red.shade400),
-                              ),
-                              TextSpan(
-                                text: "cycles",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    decoration: TextDecoration.underline),
-                              ),
-                              TextSpan(
-                                text: "?",
+                                text: "mind to ",
                                 style: TextStyle(fontWeight: FontWeight.w600),
+                              ),
+                              TextSpan(
+                                text: "focus",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.yellow),
                               ),
                             ],
                           ),
                         ),
                         SizedBox(
                           height: 20,
-                        ),
-                        TextField(
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(),
-                            hintText: 'hint: 1 Cycle = 25min + 5min',
-                            filled: true,
-                            fillColor: Colors.white.withOpacity(1),
-                          ),
-                          keyboardType: TextInputType.number,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.digitsOnly
-                          ],
-                        ),
-                        SizedBox(
-                          height: 10,
                         ),
                         Stack(
                           children: [
@@ -167,5 +147,7 @@ class _WelcomePageState extends State<WelcomePage> {
   @override
   void dispose() {
     super.dispose();
+    _videoController.dispose();
+    _textController.dispose();
   }
 }

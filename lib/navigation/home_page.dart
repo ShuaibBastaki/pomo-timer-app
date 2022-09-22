@@ -28,7 +28,6 @@ class _HomePageState extends State<HomePage>
       vsync: this,
       duration: const Duration(seconds: 4),
     );
-
     super.initState();
   }
 
