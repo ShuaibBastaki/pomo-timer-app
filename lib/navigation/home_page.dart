@@ -28,7 +28,6 @@ class _HomePageState extends State<HomePage>
       vsync: this,
       duration: const Duration(seconds: 4),
     );
-
     super.initState();
   }
 
@@ -106,6 +105,7 @@ class _HomePageState extends State<HomePage>
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         centerTitle: true,
         backgroundColor: Colors.transparent,
         elevation: 0,
